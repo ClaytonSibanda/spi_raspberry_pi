@@ -50,8 +50,9 @@ def output(readings):
    print("_________________________________________________________")
    print("Time     Timer    Pot   Temp Light")
    for i in range(0, 5):
-      print("{} {} {}V {}C {}%".format(readings[i][0], readings[i][1], readings[i][2], str(readings[i][3])+deg, readings[i][4]))
-      print("_________________________________________________________")
+       if readings[i]is not None:
+            print("{} {} {}V {}C {}%".format(readings[i][0], readings[i][1], readings[i][2], str(readings[i][3])+deg, readings[i][4]))
+            print("_________________________________________________________")
 	  
 def delay():
     sleep(2)
@@ -60,7 +61,7 @@ def display_handler(channel_number): #pin number is the pin that caused this eve
     print("Display pressed\n")
     global readings_recorded
     output(readings_recorded)
-    delay()
+ 
  
 def freq_change_handler(channel_number):
     global frequency
@@ -71,12 +72,12 @@ def freq_change_handler(channel_number):
         frequency = 2
     elif frequency == 2:
         frequency = .5
-    delay()
+   
 
 def reset_handler(channel_number):
     print("\033[H\033[J")
     print("reset pressed")
-    delay()
+   
 
 def start_stop_handler(channel_number):
     global recording
@@ -138,10 +139,11 @@ def record_readings():
     timer += frequency 
 
 def main():
-    global frequency	 	 
+    global frequency
+    global readings_recorded
     while True:
         ldr_value = readadc(ldr_channel)
-        print ("Recording data")
+        output(readings_recorded)
         sleep(frequency)
         record_readings()
 
