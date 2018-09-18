@@ -28,7 +28,7 @@ DISPLAY_SWITCH = 33 #button to display the results
 frequency = .5
 readings_recorded = [None]*5
 timer = 0
-recording = False
+recording = True
 index =0
 
 def exit_handler():
@@ -143,7 +143,8 @@ def main():
     global readings_recorded
     while True:
         ldr_value = readadc(ldr_channel)
-        output(readings_recorded)
+        if recording:
+            output(readings_recorded)
         sleep(frequency)
         record_readings()
 
